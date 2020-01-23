@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TinyClothes.Data;
 
 namespace TinyClothes
 {
@@ -20,14 +22,32 @@ namespace TinyClothes
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        private void ConfigDbConext(DbContextOptionsBuilder options)
         {
-            services.AddControllersWithViews();
+            options.UseSqlServer(Configuration.GetConnectionString("ClothesDB"));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        // This method gets called by the runtime.
+        // Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            IMvcBuilder builder = services.AddControllersWithViews();
+
+            services.AddDbContext<StoreContext>(ConfigDbConext);
+            //services.AddDbContext<StoreContext>
+            //(
+            //    options => options.UseSqlServer("con string goes here")
+            //);
+#if DEBUG
+            // Only add during DEBUG mode
+            // builder.AddRazorRuntimeCompilation();
+#endif
+        }
+
+        // This method gets called by the runtime.
+        //Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, 
+                              IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -36,7 +56,8 @@ namespace TinyClothes
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                // The default HSTS value is 30 days.
+                // You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
