@@ -12,10 +12,10 @@ Visual Studio 2017/2019, some sort of internet browser(for testing), SQL Server,
 Yes, but please only do so in the issues tab.
 
 #### What are some good resources for working with this project?
-https://docs.microsoft.com/en-us/aspnet/core/mvc/overview?view=aspnetcore-3.1
-https://docs.microsoft.com/en-us/ef/core/
-https://www.w3schools.com/html/html_intro.asp
-https://www.w3schools.com/css/css_intro.asp
+https://docs.microsoft.com/en-us/aspnet/core/mvc/overview?view=aspnetcore-3.1  
+https://docs.microsoft.com/en-us/ef/core/  
+https://www.w3schools.com/html/html_intro.asp  
+https://www.w3schools.com/css/css_intro.asp  
 https://www.w3schools.com/bootstrap/bootstrap_get_started.asp
 
 #### Can I fork this project?
