@@ -5,7 +5,7 @@ This is a joke website for purchasing tiny clothing for your pet. Has CRUD funct
 
 # Questions
 
-#### Are people allowed to cry while reviewing your code?
+#### Am I allowed to cry while reviewing your code?
 Yes, but please only do so in the issues tab.
 
 #### Can I fork this project?
