@@ -18,11 +18,11 @@ namespace TinyClothes.Controllers
         }
 
         [HttpGet]
-        public IActionResult ShowAll()
+        public async Task<IActionResult> ShowAll()
         {
             // Just a placeholder...
             List<Clothing> clothes =
-                new List<Clothing>();
+                await ClothingDB.GetClothingbyPage(context, 1, 1);
             return View(clothes);
         }
 
