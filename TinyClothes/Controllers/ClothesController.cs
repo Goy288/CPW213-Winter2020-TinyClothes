@@ -18,12 +18,26 @@ namespace TinyClothes.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ShowAll()
+        public async Task<IActionResult> ShowAll(int? page)
         {
-            // Just a placeholder...
+            const int PageSize = 2;
+            // Null-coalescing operator ??
+            // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-coalescing-operator
+            int pageNumber = page ?? 1;
+
+            int maxPage = await GetMaxPage(PageSize);
+            ViewData["MaxPage"] = maxPage;
+
             List<Clothing> clothes =
-                await ClothingDB.GetClothingbyPage(context, 1, 1);
+                await ClothingDB.GetClothingbyPage(context, pageNumber, PageSize);
             return View(clothes);
+        }
+
+        private async Task<int> GetMaxPage(int PageSize)
+        {
+            int numProducts = await ClothingDB.GetNumClothing(context);
+            return Convert.ToInt32(
+                   Math.Ceiling((double)numProducts / PageSize));
         }
 
         [HttpGet]

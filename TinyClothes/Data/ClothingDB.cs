@@ -13,6 +13,15 @@ namespace TinyClothes.Data
     public static class ClothingDB
     {
         /// <summary>
+        /// Returns the total number of Clothing items
+        /// </summary>
+        /// <returns></returns>
+        public async static Task<int> GetNumClothing(StoreContext context)
+        {
+            return await context.Clothing.CountAsync();
+        }
+
+        /// <summary>
         /// Gets a specific page of cloting items 
         /// sorted by ItemID in ascending order.
         /// </summary>
@@ -29,7 +38,7 @@ namespace TinyClothes.Data
             //LINQ Method Syntax
             List<Clothing> clothes = 
                 await context.Clothing
-                             .Skip(pageSize * (pageNum - 1))
+                             .Skip(pageSize * (pageNum - PageOffset))
                              .Take(pageSize)
                              .OrderBy(c => c.ItemID)
                              .ToListAsync();
