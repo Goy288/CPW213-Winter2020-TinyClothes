@@ -4,44 +4,61 @@
 }
 
 <h1>Add new clothing</h1>
+<br />
+<form class="form-group" method="post">
+    <div class="d-inline-flex input-group mb-2 mr-sm-2 w-50" >
+        <div class="input-group-prepend" asp-for="Size">
+            <label class="input-group-text" asp-for="Size"></label>
+        </div>
+        <input class="form-control" asp-for="Size" placeholder="" />
+    </div>
+    <span asp-validation-for="Size"></span>
+    <br />
 
-<div class="form-group">
-    <form method="post">
-        <label asp-for="Size"></label>
-        <input asp-for="Size" />
-        <span asp-validation-for="Size"></span>
-        <br />
+    <div class="d-inline-flex input-group mb-2 mr-sm-2 w-50">
+        <div class="input-group-prepend">
+            <label class="input-group-text" asp-for="Type"></label>
+        </div>
+        <input class="form-control" asp-for="Type" placeholder="" />
+    </div>
+    <span asp-validation-for="Type"></span>
+    <br />
 
-        <label asp-for="Type"></label>
-        <input asp-for="Type" />
-        <span asp-validation-for="Type"></span>
-        <br />
+    <div class="d-inline-flex input-group mb-2 mr-sm-2 w-50">
+        <div class="input-group-prepend">
+            <label class="input-group-text" asp-for="Color"></label>
+        </div>
+        <input class="form-control" asp-for="Color" placeholder="" />
+    </div>
+    <span asp-validation-for="Color"></span>
+    <br />
 
-        <label asp-for="Color"></label>
-        <input asp-for="Color" />
-        <span asp-validation-for="Color"></span>
-        <br />
+    <div class="d-inline-flex input-group mb-2 mr-sm-2 w-50">
+        <div class="input-group-prepend">
+            <label class="input-group-text" asp-for="Price">Price</label>
+        </div>
+        <input class="form-control" asp-for="Price" placeholder="" />
+    </div>
+    <span asp-validation-for="Price"></span>
+    <br />
 
-        <label asp-for="Price"></label>
-        <input asp-for="Price" />
-        <span asp-validation-for="Price"></span>
-        <br />
+    <div class="d-inline-flex input-group mb-2 mr-sm-2 w-50">
+        <div class="input-group-prepend">
+            <label class="input-group-text" asp-for="Title">Title</label>
+        </div>
+        <input class="form-control" asp-for="Title" placeholder="" />
+    </div>
+    <span asp-validation-for="Title"></span>
+    <br />
 
-        <label asp-for="Title"></label>
-        <input asp-for="Title" />
-        <span asp-validation-for="Title"></span>
-        <br />
+    <div class="d-inline-flex input-group mb-2 mr-sm-2 w-50">
+        <div class="input-group-prepend">
+            <label class="input-group-text" asp-for="Description">Description</label>
+        </div>
+        <input class="form-control" asp-for="Description" placeholder="" />
+    </div>
+    <span asp-validation-for="Description"></span>
+    <br />
 
-        <label asp-for="Description"></label>
-        <input asp-for="Description" />
-        <span asp-validation-for="Description"></span>
-        <br />
-
-        <label asp-for="Title"></label>
-        <input asp-for="Title" />
-        <span asp-validation-for="Title"></span>
-        <br />
-
-        <input type="submit" value="Add Clothing" />
-    </form>
-</div>
+    <input class="btn btn-primary text-white" type="submit" value="Add Clothing" />
+</form>
