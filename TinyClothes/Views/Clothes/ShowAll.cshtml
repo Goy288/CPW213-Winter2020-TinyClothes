@@ -80,20 +80,44 @@
 @* Print page numbers *@
 <nav>
     <ul class="pagination">
-        <li class="page-item">
-            <a class="page-link" asp-action="ShowAll" asp-route-page="1">First</a>
-        </li>
+        @if ((int)ViewData["CurrentPage"] >= 1)
+        {
+            <li class="page-item">
+                <a class="page-link"
+                   asp-action="ShowAll"
+                   asp-route-page="@((int)ViewData["CurrentPage"] - 1 )">Back</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item inactive">
+                <a class="page-link"
+                   href="#">Back</a>
+            </li>
+        }
         @{
             int maxPage = (int)ViewData["MaxPage"];
             for (int i = 1; i <= maxPage; i++)
             {
-                <li class="page-item">
-                    <a class="page-link" asp-action="ShowAll" asp-route-page="@i">@i</a>
-                </li>
+                if (i != (int)ViewData["CurrentPage"])
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="ShowAll"
+                           asp-route-page="@i">@i</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item active">
+                        <a class="page-link" href="#">@i</a>
+                    </li>
+                }
             }
         }
         <li class="page-item">
-            <a class="page-link" asp-action="ShowAll" asp-route-page="@maxPage">Last</a>
+            <a class="page-link"
+               asp-action="ShowAll"
+               asp-route-page="@((int)ViewData["CurrentPage"] + 1)">Next</a>
         </li>
     </ul>
 </nav>
