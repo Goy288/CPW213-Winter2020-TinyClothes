@@ -23,24 +23,24 @@ namespace TinyClothes.Models
         /// <summary>
         /// The type of clothing.
         /// </summary>
-        [Required]
+        [Required(ErrorMessage = "Type is required")]
         public string Type { get; set; }
 
         // The clothing's color.
-        [Required]
+        [Required(ErrorMessage = "Color is required")]
         public string Color { get; set; }
 
         /// <summary>
         /// Retail price of the item
         /// </summary>
-        [Required]
+        [Required(ErrorMessage = "Price is required")]
         [Range(0.00, 1000000000.00)]
         public double Price { get; set; }
 
         /// <summary>
         /// The clothing's display title.
         /// </summary>
-        [Required]
+        [Required(ErrorMessage = "Title is required")]
         [StringLength(32)]
         // Sample Regex, great for validation.
         //[RegularExpression("^([A-Za-z0-9])+$",
@@ -50,6 +50,7 @@ namespace TinyClothes.Models
         /// <summary>
         /// Describes the clothing.
         /// </summary>
+        [Required(ErrorMessage = "Description is required")]
         [StringLength(1024)]
         public string Description { get; set; }
 
