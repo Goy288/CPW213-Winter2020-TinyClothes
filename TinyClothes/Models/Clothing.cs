@@ -35,6 +35,7 @@ namespace TinyClothes.Models
         /// </summary>
         [Required(ErrorMessage = "Price is required")]
         [Range(0.00, 1000000000.00)]
+        [DataType(DataType.Currency)]
         public double Price { get; set; }
 
         /// <summary>
