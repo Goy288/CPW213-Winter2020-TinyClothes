@@ -61,6 +61,23 @@ namespace TinyClothes.Data
         }
 
         /// <summary>
+        /// Returns a single clothing item if there
+        /// is a match, null if otherwise
+        /// </summary>
+        /// <param name="id">The id of the item</param>
+        /// <param name="context">DB Context</param>
+        /// <returns>A single clothing item</returns>
+        public static async Task<Clothing> GetClothingbyID(int id, StoreContext context)
+        {
+            Clothing c = await (
+                from clothing in context.Clothing
+                where clothing.ItemID == id
+                select clothing
+            ).SingleOrDefaultAsync();
+            return c;
+        }
+
+        /// <summary>
         /// Add a clothing object to the database.
         /// </summary>
         /// <param name="c">The clothing object to be added</param>
