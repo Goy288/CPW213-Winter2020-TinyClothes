@@ -77,6 +77,14 @@ namespace TinyClothes.Data
             return c;
         }
 
+        public static async Task<Clothing> Edit(Clothing c, StoreContext context)
+        {
+            await context.AddAsync(c);
+            context.Entry(c).State = EntityState.Modified;
+            await context.SaveChangesAsync();
+            return c;
+        }
+
         /// <summary>
         /// Add a clothing object to the database.
         /// </summary>

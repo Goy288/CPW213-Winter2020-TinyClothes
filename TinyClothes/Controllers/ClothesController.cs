@@ -65,9 +65,27 @@ namespace TinyClothes.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-
             //Return same view with validation messages
             Clothing c = await ClothingDB.GetClothingbyID(id, _context);
+
+            if(c == null) // Clothing not in DB
+            {
+                // Returns a HTTP 404 - Not Found
+                return NotFound();
+            }
+
+            return View(c);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(Clothing c)
+        {
+            if (ModelState.IsValid)
+            {
+                await ClothingDB.Edit(c, _context);
+
+                ViewData["Message"] =
+                    c.Title + " updated successfully!";
+            }
 
             return View(c);
         }
