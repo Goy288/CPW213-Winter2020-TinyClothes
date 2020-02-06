@@ -10,11 +10,11 @@ namespace TinyClothes.Controllers
 {
     public class ClothesController : Controller
     {
-        private readonly StoreContext context;
+        private readonly StoreContext _context;
 
         public ClothesController(StoreContext context)
         {
-            this.context = context;
+            this._context = context;
         }
 
         [HttpGet]
@@ -30,13 +30,13 @@ namespace TinyClothes.Controllers
             ViewData["MaxPage"] = maxPage;
 
             List<Clothing> clothes =
-                await ClothingDB.GetClothingbyPage(context, pageNumber, PageSize);
+                await ClothingDB.GetClothingbyPage(_context, pageNumber, PageSize);
             return View(clothes);
         }
 
         private async Task<int> GetMaxPage(int PageSize)
         {
-            int numProducts = await ClothingDB.GetNumClothing(context);
+            int numProducts = await ClothingDB.GetNumClothing(_context);
             return Convert.ToInt32(
                    Math.Ceiling((double)numProducts / PageSize));
         }
@@ -52,7 +52,7 @@ namespace TinyClothes.Controllers
         {
             if (ModelState.IsValid)
             {
-                await ClothingDB.Add(c, context);
+                await ClothingDB.Add(c, _context);
                 // TODO: Add a success message after redirent
                 // redirect
                 // TempData lasts for one redirect.
@@ -60,6 +60,33 @@ namespace TinyClothes.Controllers
                 return RedirectToAction("ShowAll");
             }
             //Return same view with validation messages
+            return View(c);
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            //Return same view with validation messages
+            Clothing c = await ClothingDB.GetClothingbyID(id, _context);
+
+            if(c == null) // Clothing not in DB
+            {
+                // Returns a HTTP 404 - Not Found
+                return NotFound();
+            }
+
+            return View(c);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(Clothing c)
+        {
+            if (ModelState.IsValid)
+            {
+                await ClothingDB.Edit(c, _context);
+
+                ViewData["Message"] =
+                    c.Title + " updated successfully!";
+            }
+
             return View(c);
         }
     }
