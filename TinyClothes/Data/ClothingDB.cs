@@ -91,11 +91,15 @@ namespace TinyClothes.Data
                 
             if (c != null)
             {
-                await context.AddAsync(c);
-
-                context.Entry(c).State = EntityState.Deleted;
-                await context.SaveChangesAsync();
+                await Delete(c, context);
             }
+        }
+
+        public async static Task Delete(Clothing c, StoreContext context)
+        {
+            await context.AddAsync(c);
+            context.Entry(c).State = EntityState.Deleted;
+            await context.SaveChangesAsync();
         }
 
         /// <summary>
