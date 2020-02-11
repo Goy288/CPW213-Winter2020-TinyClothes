@@ -16,6 +16,7 @@ namespace TinyClothes.Data
 
         // Add a DbSet for each entity that needs to be tracked by the database.
         public DbSet<Clothing> Clothing { get; set; }
+        public DbSet<Account> Accounts { get; set; }
         /*
         interface IPayProvider
         {
