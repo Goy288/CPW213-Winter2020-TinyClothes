@@ -89,5 +89,21 @@ namespace TinyClothes.Controllers
 
             return View(c);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            Clothing c = await ClothingDB.GetClothingbyID(id, _context);
+
+            return View(c);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        public async Task<IActionResult> DeleteComfirmed(int id)
+        {
+            await ClothingDB.Delete(id, _context);
+            return RedirectToAction(nameof(ShowAll));
+        }
     }
 }
