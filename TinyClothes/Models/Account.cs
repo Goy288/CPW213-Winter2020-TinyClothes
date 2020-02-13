@@ -56,7 +56,6 @@ namespace TinyClothes.Models
         /// <summary>
         /// Where to ship the product.
         /// </summary>
-        [Required]
         [StringLength(256)]
         public string Address { get; set; }
 
@@ -75,6 +74,7 @@ namespace TinyClothes.Models
         /// </summary>
         [Required]
         [StringLength(64)]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
         /// <summary>
@@ -82,6 +82,7 @@ namespace TinyClothes.Models
         /// </summary>
         [Required]
         [StringLength(64)]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
         /// <summary>
@@ -105,6 +106,7 @@ namespace TinyClothes.Models
         [Required]
         [Compare(nameof(Password))]
         [DataType(DataType.Password)] // <input type="password">
+        [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
         
         /// <summary>
