@@ -42,6 +42,20 @@ namespace TinyClothes
             // Only add during DEBUG mode
             // builder.AddRazorRuntimeCompilation();
 #endif
+            // Add & configure session.
+            services.AddDistributedMemoryCache();
+
+            services.AddSession
+            (
+                options => 
+                {
+                    options.Cookie.Name = ".TinyClothes.Session";
+                    options.IdleTimeout = TimeSpan.FromMinutes(20);
+                    // Session cookie always gets created even
+                    // if user does not accept cookie policy
+                    options.Cookie.IsEssential = true;
+                }
+            );
         }
 
         // This method gets called by the runtime.
@@ -66,6 +80,9 @@ namespace TinyClothes
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // Allows session data to be accessed.
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
