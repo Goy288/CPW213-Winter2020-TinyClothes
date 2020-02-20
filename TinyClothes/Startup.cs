@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -38,6 +39,10 @@ namespace TinyClothes
             //(
             //    options => options.UseSqlServer("con string goes here")
             //);
+            string connection = Configuration.GetConnectionString("ClothesDB");
+            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            // Same as above.
+            services.AddHttpContextAccessor();
 #if DEBUG
             // Only add during DEBUG mode
             // builder.AddRazorRuntimeCompilation();

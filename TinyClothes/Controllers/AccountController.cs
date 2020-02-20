@@ -14,10 +14,13 @@ namespace TinyClothes.Controllers
     public class AccountController : Controller
     {
         private readonly StoreContext _context;
+        private readonly IHttpContextAccessor _accessor;
 
-        public AccountController(StoreContext context)
+        public AccountController
+            (StoreContext context, IHttpContextAccessor accessor)
         {
-            this._context = context;
+            _context = context;
+            _accessor = accessor;
         }
 
         public IActionResult Register()
@@ -45,6 +48,8 @@ namespace TinyClothes.Controllers
 
                     // Add Account to DB
                     await AccountDB.Register(_context, acc);
+
+                    SessionHelper.CreateUserSession(acc.AccountID, acc.Username, _accessor);
 
                     // Create user session
                     HttpContext.Session.SetInt32("ID", acc.AccountID);
@@ -75,9 +80,12 @@ namespace TinyClothes.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool isMatch = 
+                Account acc = 
                     await AccountDB.DoesUserMatch(login, _context);
+                
                 // TODO: Create session
+                SessionHelper.CreateUserSession
+                    (acc.AccountID, acc.Username, _accessor);
 
                 return RedirectToAction("Index", "Home");
             }
