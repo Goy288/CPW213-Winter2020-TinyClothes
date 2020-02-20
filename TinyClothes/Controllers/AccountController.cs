@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using TinyClothes.Data;
 using TinyClothes.Models;
 
@@ -13,10 +15,13 @@ namespace TinyClothes.Controllers
     public class AccountController : Controller
     {
         private readonly StoreContext _context;
+        private readonly IHttpContextAccessor _accessor;
 
-        public AccountController(StoreContext context)
+        public AccountController
+            (StoreContext context, IHttpContextAccessor accessor)
         {
-            this._context = context;
+            _context = context;
+            _accessor = accessor;
         }
 
         public IActionResult Register()
@@ -44,6 +49,16 @@ namespace TinyClothes.Controllers
 
                     // Add Account to DB
                     await AccountDB.Register(_context, acc);
+
+                    SessionHelper.CreateUserSession(acc.AccountID, acc.Username, _accessor);
+
+                    // Create user session
+                    HttpContext.Session.SetInt32("ID", acc.AccountID);
+                    //Console.WriteLine(HttpContext.Session.GetInt32("ID"));
+                    HttpContext.Session.SetString("Username", acc.Username);
+                    //string username = HttpContext.Session.GetString("Username");
+                    //Console.WriteLine(username);
+
                     return RedirectToAction("Index", "Home");
                 }
                 else // If username is taken, add error
@@ -54,6 +69,38 @@ namespace TinyClothes.Controllers
             }
 
             return View(reg);
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel login)
+        {
+            if (ModelState.IsValid)
+            {
+                Account acc = 
+                    await AccountDB.DoesUserMatch(login, _context);
+                
+                if (acc != null)
+                {
+                    SessionHelper.CreateUserSession
+                        (acc.AccountID, acc.Username, _accessor);
+
+                    return RedirectToAction("Index", "Home");
+                }
+
+                ModelState.AddModelError(string.Empty, "Invalid Credentials");
+            }
+            return View();
+        }
+
+        public IActionResult Logout()
+        {
+            SessionHelper.DeleteUserSession(_accessor);
+            return RedirectToAction("Index", "Home");
         }
     }
 }

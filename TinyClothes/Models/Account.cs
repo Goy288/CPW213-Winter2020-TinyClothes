@@ -116,4 +116,22 @@ namespace TinyClothes.Models
         [EmailAddress]
         public string Email { get; set; }
     }
+
+    public class LoginViewModel
+    {
+        /// <summary>
+        /// The username
+        /// </summary>
+        [Required]
+        [StringLength(32)]
+        public string UsernameOrEmail { get; set; }
+
+        /// <summary>
+        /// The password for logging in
+        /// </summary>
+        [Required]
+        [StringLength(256)]
+        [DataType(DataType.Password)] // <input type="password">
+        public string Password { get; set; }
+    }
 }
