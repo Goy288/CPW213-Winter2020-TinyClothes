@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using TinyClothes.Data;
 using TinyClothes.Models;
 
@@ -83,11 +84,15 @@ namespace TinyClothes.Controllers
                 Account acc = 
                     await AccountDB.DoesUserMatch(login, _context);
                 
-                // TODO: Create session
-                SessionHelper.CreateUserSession
-                    (acc.AccountID, acc.Username, _accessor);
+                if (acc != null)
+                {
+                    SessionHelper.CreateUserSession
+                        (acc.AccountID, acc.Username, _accessor);
 
-                return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home");
+                }
+
+                ModelState.AddModelError(string.Empty, "Invalid Credentials");
             }
             return View();
         }
