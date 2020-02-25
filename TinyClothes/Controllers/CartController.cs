@@ -33,7 +33,7 @@ namespace TinyClothes.Controllers
 
             if (c != null)
             {
-                CartHelper.Add(c, );
+                CartHelper.Add(c, _accessor);
             }
 
             return View();

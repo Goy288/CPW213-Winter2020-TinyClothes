@@ -15,7 +15,7 @@ namespace TinyClothes.Models
     {
         public static void Add(Clothing c, IHttpContextAccessor accessor)
         {
-            string data = JsonConvert.SerializeObject(c);                                                               );
+            string data = JsonConvert.SerializeObject(c);
 
             CookieOptions options = new CookieOptions()
             {
