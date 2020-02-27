@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<TinyClothes.Models.Clothing>
-
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor accessor
 @{
     ViewData["Title"] = "List Clothing Inventory";
 }
@@ -67,9 +67,17 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
+                @{
+                    // Get current URL path "/Clothes/Showall"
+                    string prevUrl = accessor.HttpContext.Request.Path
+                                   // Add query string "?page=2"
+                                   + accessor.HttpContext.Request.QueryString.Value;
+
+                }
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.ItemID" class="btn btn-primary">Edit</a>
                     <a asp-action="Delete" asp-route-id="@item.ItemID" class="btn btn-danger">Delete</a>
+                    <a asp-action="Add" asp-controller="Cart" asp-route-id="@item.ItemID" asp-route-prevUrl="@prevUrl" class="btn btn-primary">Add to Cart</a>
                 </td>
             </tr>
         }
