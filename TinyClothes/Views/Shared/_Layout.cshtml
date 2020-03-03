@@ -11,15 +11,15 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar fixed-top navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TinyClothes</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="navbar-collapse collapse d-sm-inline-flex">
+                    <ul class="navbar-nav flex-grow-1 mr-auto">
                         <li class="nav-item">
                             <a type="button" class="btn btn-primary nav-link text-white" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
@@ -29,6 +29,8 @@
                         <li class="nav-item">
                             <a type="button" class="btn btn-primary nav-link text-white" asp-controller="Clothes" asp-action="ShowAll">Inventory</a>
                         </li>
+                    </ul>
+                    <ul class="navbar-nav flex-grow-1 mr-auto justify-content-end">
                         @if (!SessionHelper.IsUserLoggedIn(accessor))
                         {
                             <li class="nav-item">
@@ -47,22 +49,27 @@
                         @{
                             int cartItemNum = @CartHelper.GetCount(accessor);
                         }
-                    <li class="nav-item">
-                        @if (cartItemNum <= 20)
-                        {
-                            <img class="cart" src="~/img/icon/cart/cart_@(cartItemNum).png" />
-                        }
-                        else
-                        {
-                            <img class="cart" src="~/img/icon/cart/cart_20_plus.png" />
-                        }
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark"
+                               id="cart"
+                               asp-action=""
+                               asp-controller="Cart">
+                                @if (cartItemNum <= 20)
+                                {
+                                    <img class="cart" src="~/img/icon/cart/cart_@(cartItemNum).png" />
+                                }
+                                else
+                                {
+                                    <img class="cart" src="~/img/icon/cart/cart_20_plus.png" />
+                                }
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container" style="margin-top:3.5em;">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
