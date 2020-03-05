@@ -152,7 +152,7 @@ namespace TinyClothes.Controllers
                              where c.Title.Contains(search.Title)
                              select c;
             }
-            y
+            
             search.Results = allClothes.ToList();
             return View(search);
         }
