@@ -12,6 +12,7 @@ namespace TinyClothes.Models
             Results = new List<Clothing>();
         }
 
+        public string Title { get; set; }
         public string Size { get; set; }
 
         /// <summary>

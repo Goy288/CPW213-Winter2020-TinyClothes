@@ -131,8 +131,28 @@ namespace TinyClothes.Controllers
                              where c.Price <= search.MaxPrice
                              select c;
             }
-            
 
+            if(!string.IsNullOrWhiteSpace(search.Size))
+            {
+                allClothes = from c in allClothes
+                             where c.Size == search.Size
+                             select c;
+            }
+
+            if (!string.IsNullOrWhiteSpace(search.Type))
+            {
+                allClothes = from c in allClothes
+                             where c.Size == search.Type
+                             select c;
+            }
+
+            if (!string.IsNullOrWhiteSpace(search.Title))
+            {
+                allClothes = from c in allClothes
+                             where c.Title.Contains(search.Title)
+                             select c;
+            }
+            y
             search.Results = allClothes.ToList();
             return View(search);
         }
