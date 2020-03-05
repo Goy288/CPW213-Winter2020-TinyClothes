@@ -111,6 +111,11 @@ namespace TinyClothes.Controllers
         [HttpGet]
         public async Task<IActionResult> Search(SearchCriteria search)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
             // Prepare query - SELECT * FROM Clothes
             // Does not get sent to DB
             IQueryable<Clothing> allClothes = from c in _context.Clothing
