@@ -46,6 +46,7 @@
 
 @if (Model != null && Model.Results.Count > 0)
 {
+    @*
     <div>
         <ol>
             @foreach (Clothing c in Model.Results)
@@ -54,6 +55,8 @@
             }
         </ol>
     </div>
+    *@
+    @await Html.PartialAsync("_DisplayClothes", Model.Results);
 }
 else
 {
