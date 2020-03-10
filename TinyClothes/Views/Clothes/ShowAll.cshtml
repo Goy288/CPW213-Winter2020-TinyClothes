@@ -10,121 +10,130 @@
 {
     <h2 class="alert alert-success">@TempData["Message"]</h2>
 }
-
+<p>
+    <a asp-action="Search"
+       asp-controller="Clothes">Search</a>
+</p>
 <p>
     <a asp-action="Add"
        asp-controller="Clothes">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ItemID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Size)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Type)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Color)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ItemID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Size)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Type)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Color)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                @{
-                    // Get current URL path "/Clothes/Showall"
-                    string prevUrl = accessor.HttpContext.Request.Path
-                                   // Add query string "?page=2"
-                                   + accessor.HttpContext.Request.QueryString.Value;
 
-                }
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ItemID" class="btn btn-primary">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@item.ItemID" class="btn btn-danger">Delete</a>
-                    <a asp-action="Add" asp-controller="Cart" asp-route-id="@item.ItemID" asp-route-prevUrl="@prevUrl" class="btn btn-primary">Add to Cart</a>
-                </td>
+@*<table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Size)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Color)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ItemID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Size)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Color)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    @{
+                        // Get current URL path "/Clothes/Showall"
+                        string prevUrl = accessor.HttpContext.Request.Path
+                                        // Add query string "?page=2"
+                                        + accessor.HttpContext.Request.QueryString.Value;
+
+                    }
+                <td>
+
+                    <a asp-action="Add" asp-controller="Cart" asp-route-id="@item.ItemID" asp-route-prevUrl="Clothes/Search" class="btn btn-primary">Add to Cart</a>
+                </td>
+                </tr>
+            }
+        </tbody>
+    </table>*@
+@if (Model.Count() > 0)
+{
+    @await Html.PartialAsync("_DisplayClothes", Model);
+}
+else
+{
+    <p>No products to display</p>
+}
 
 @* Print page numbers *@
-<nav>
-    <ul class="pagination">
-        @if ((int)ViewData["CurrentPage"] >= 1)
-        {
-            <li class="page-item">
-                <a class="page-link"
-                   asp-action="ShowAll"
-                   asp-route-page="@((int)ViewData["CurrentPage"] - 1 )">Back</a>
-            </li>
-        }
-        else
-        {
-            <li class="page-item inactive">
-                <a class="page-link"
-                   href="#">Back</a>
-            </li>
-        }
-        @{
-            int maxPage = (int)ViewData["MaxPage"];
-            for (int i = 1; i <= maxPage; i++)
-            {
-                if (i != (int)ViewData["CurrentPage"])
-                {
-                    <li class="page-item">
-                        <a class="page-link" asp-action="ShowAll"
-                           asp-route-page="@i">@i</a>
-                    </li>
-                }
-                else
-                {
-                    <li class="page-item active">
-                        <a class="page-link" href="#">@i</a>
-                    </li>
-                }
-            }
-        }
+<ul class="pagination">
+    @if ((int)ViewData["CurrentPage"] >= 1)
+    {
         <li class="page-item">
             <a class="page-link"
                asp-action="ShowAll"
-               asp-route-page="@((int)ViewData["CurrentPage"] + 1)">Next</a>
+               asp-route-page="@((int)ViewData["CurrentPage"] - 1 )">Back</a>
         </li>
-    </ul>
-</nav>
+    }
+    else
+    {
+        <li class="page-item inactive">
+            <a class="page-link"
+               href="#">Back</a>
+        </li>
+    }
+    @{
+        int maxPage = (int)ViewData["MaxPage"];
+        for (int i = 1; i <= maxPage; i++)
+        {
+            if (i != (int)ViewData["CurrentPage"])
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-action="ShowAll"
+                       asp-route-page="@i">@i</a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item active">
+                    <a class="page-link" href="#">@i</a>
+                </li>
+            }
+        }
+    }
+    <li class="page-item">
+        <a class="page-link"
+           asp-action="ShowAll"
+           asp-route-page="@((int)ViewData["CurrentPage"] + 1)">Next</a>
+    </li>
+</ul>
