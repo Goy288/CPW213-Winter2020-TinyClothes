@@ -89,6 +89,8 @@ namespace TinyClothes
             // Allows session data to be accessed.
             app.UseSession();
 
+            app.UseStatusCodePagesWithRedirects("/Home/ErrorCustom?code={0}");
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
