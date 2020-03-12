@@ -60,6 +60,11 @@ namespace TinyClothes.Data
             //throw new NotImplementedException();
         }
 
+        internal static Task<Clothing> GetClothingbyID(int? id, StoreContext context)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Returns a single clothing item if there
         /// is a match, null if otherwise
