@@ -64,10 +64,15 @@ namespace TinyClothes.Controllers
             return View(c);
         }
 
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
+            if(id == null)
+            {
+                return BadRequest();
+            }
+
             //Return same view with validation messages
-            Clothing c = await ClothingDB.GetClothingbyID(id, _context);
+            Clothing c = await ClothingDB.GetClothingbyID(id.Value, _context);
 
             if(c == null) // Clothing not in DB
             {
